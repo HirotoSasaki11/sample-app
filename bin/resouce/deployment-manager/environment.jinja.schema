@@ -1,0 +1,27 @@
+info:
+  title: Mostro GCP Environment
+  author: ryutah
+  description: Creates Environment for Mostro
+  version: 1.0
+
+imports:
+  - path: environment.jinja
+
+properties:
+  region:
+    type: string
+    default: asia-northeast1
+    description: |
+      Region info for resources
+  zone:
+    type: string
+    default: asia-northeast1-a
+    description: |
+      Zone info for resources
+  origin:
+    type: array
+    default: []
+    description: |
+      Origin name for cors
+    items:
+        type: string

@@ -1,0 +1,11 @@
+imports:
+  - path: environment.jinja
+resources:
+  - name: environment
+    type: environment.jinja
+    properties:
+      origin: ["https://sandbox-hirotosasaki.df.r.appspot.com"]
+          # And another domain...
+      createApiDefinitionBucket: true
+      region: asia-northeast1
+      zone: asia-northeast1-a

@@ -1,0 +1,287 @@
+swagger: '2.0'
+info:
+  title: server API
+  version: "1.0.0"
+  description: サンプルアプリのREST API.
+paths:
+  /article:
+    post:
+      tags:
+      - "article"
+      summary: "記事新規作成"
+      description: "記事を新しく作成する"
+      parameters:
+      - in: "body"
+        name: "post_article"
+        required: true
+        schema:
+          $ref: '#/definitions/Article'
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/Article'
+        401:
+          description: "unauthorized api request"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+            
+  /article/{article_id}:
+    get:
+      tags:
+      - "article"
+      summary: "記事取得"
+      description: "指定された記事IDの記事を取得する"
+      operationId: "get_article"
+      parameters:
+      - name: "article_id"
+        in: "path"
+        description: "記事ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Article"
+        401:
+          description: "unauthorized api request"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: "Article not found"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    put:
+      tags:
+      - "article"
+      summary: "記事更新"
+      description: "指定された記事の更新を行う"
+      parameters:
+      - name: "article_id"
+        in: "path"
+        description: "記事ID"
+        required: true
+        type: "string"
+      - name: "patch_article"
+        in: "body"
+        description: "記事更新情報"
+        required: true
+        schema:
+          $ref: '#/definitions/Article'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Article'
+        401:
+          description: "unauthorized api request"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: "Article not found"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      tags:
+      - "article"
+      summary: "記事削除"
+      description: "指定された記事を削除する"
+      parameters:
+      - name: "article_id"
+        in: "path"
+        description: "記事ID"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: No Content
+        401:
+          description: "unauthorized api request"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        404:
+          description: "Article not found"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+            
+  /media/{media_id}:
+    get:
+      tags:
+      - media
+      summary: "画像ファイル取得"
+      description: "画像ファイルの取得"
+      parameters:
+        - in: path
+          name: media_id
+          description: 画像ファイルのID
+          required: true
+          type: string
+      responses:     
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Media'
+        401:
+          description: "unauthorized api request"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      tags:
+        - media
+      summary: "画像ファイル削除"
+      description: "画像ファイルの削除"
+      parameters:
+      - in: "path"
+        name: "media_id"
+        required: true
+        type: "string"
+        description: "メディアID"
+      responses:     
+        204:
+          description: No content
+        401:
+          description: "unauthorized api request"
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /media:
+    post:
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          description: アップロードするファイル
+          required: true
+      tags:
+        - media
+      summary: "画像ファイル作成"
+      description: "画像ファイルの作成"
+      responses:     
+        201:
+          description: OK
+          schema:
+            type: "object"
+            properties:
+              url:
+                type: "string"
+                description: "upload_url"
+                readOnly: true
+        401:
+          description: "unauthorized api request"
+          schema:
+              $ref: '#/definitions/ErrorResponse'
+
+definitions:
+  Article:
+    type: "object"
+    description: "記事"
+    properties:
+      id:
+        type: "string"
+        description: "記事ID"
+        readOnly: true
+      title:
+        type: "string"
+        description: "記事タイトル"
+      content:
+        type: "string"
+        description: "コンテンツ"
+      author:
+        type: "string"
+        description: "投稿者"
+      media:
+        $ref: '#/definitions/Media'
+      tags:
+        type: "array"
+        items:
+          $ref: '#/definitions/Tag'
+  Articles:
+    type: "object"
+    description: "記事リスト"
+    properties:
+      articles:
+        type: "array"
+        items:
+          $ref: '#/definitions/Article'
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "ユーザーID"
+      display_name:
+        type: "string"
+        description: "表示名"
+        readOnly: true
+      image_url:
+        type: "string"
+        description: "記事投稿者のアイコン画像URL"
+        readOnly: true
+  Media:
+   type: "object"
+   properties:
+    id:
+      type: "string"
+      description: "イメージ"
+      readOnly: true
+    name:
+      type: "string"
+      description: "ファイル名"
+    url:
+      type: "string"
+      description: "画像URL"
+      readOnly: true
+    type:
+      type: "string"
+      description: "メディアタイプ"
+      enum:
+      - "image/png"
+      - "image/jpg"
+      - "image/jpeg"
+      - "image/gif"
+    upload_user:
+      type: "string"
+      description: "アップロードユーザUID"
+      x-nullable: true
+    upload_date:
+      type: "string"
+      format: "RFC3339"
+      description: "アップロード日"
+      x-nullable: true
+      required:
+       - name
+  Tag:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "タグID"
+      name:
+        type: "string"
+        description: "タグ名"  
+  Medias:
+   type: "object"
+   properties:
+     medias:
+       type: "array"
+       items:
+         $ref: '#/definitions/Media'
+         
+  ErrorResponse:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+        description: "エラーコード"
+        enum:
+        - "not_found"
+        - "unauthorized_request"
+        - "invalid_request"
+        - "internal_server_error"
+        - "conflict_resource"
+      error_detail:
+        type: "string"
+        description: "エラー詳細内容"
+        x-nulllable: true
