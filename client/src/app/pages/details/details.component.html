@@ -1,0 +1,18 @@
+<div class="content ">
+    <div class="border">
+        <div class="under_border">
+            <h1>{{article.title}}</h1>
+        </div>
+        <div>
+            <img width="200" height="200" src="{{article.media.url}}">
+            <p>{{article.content}}</p>
+        </div>
+    </div>
+    <div class="border">
+        <p>投稿者：{{article.author}}</p>
+        <p>最終更新日時：{{article.uploadDate}}</p>
+    </div>
+    <div class="border">
+        <button (click)="edit()">記事の編集</button>
+    </div>
+</div>

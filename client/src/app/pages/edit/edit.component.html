@@ -1,0 +1,20 @@
+<div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()"> 
+        <div class="input_box">
+            <p>タイトル</p>
+            <p><input type="text" name="title" formControlName="title"></p>
+        </div>
+        <div class="input_box">
+            <p>記事内容</p>
+            <p><textarea type="text" formControlName="content"></textarea></p>
+        </div>
+        <div class="input_box">
+            <p>アップロード画像</p>
+            <p><input type="file" formControlName="image_file"></p>
+        </div>
+    </form>
+</div>
+<div class="right_content">
+    <button (click)="delete()">更新</button>
+    <button (click)="delete()">削除</button>    
+</div>

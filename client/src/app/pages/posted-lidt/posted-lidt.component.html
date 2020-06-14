@@ -1,0 +1,12 @@
+<ng-container *ngFor="let article of articles">
+    <div class="under_border boxA" >
+        <!-- <div class="box1 thumbnail_image">
+            <img *ngIf="article.media.url" [src]="article.media.url">
+        </div> -->
+        <div class="box2">
+            <p><a href="/details?id={{ article.id }}">{{article.title}}</a></p>
+            <p>{{article.author}} {{article.uploadDate}}</p>
+        </div>
+    </div>
+</ng-container>
+    

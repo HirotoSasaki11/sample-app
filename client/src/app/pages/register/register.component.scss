@@ -1,0 +1,20 @@
+.input_box {
+    width:80%;
+    // padding:20px 0px;
+     padding-left: 100px;
+  }
+  .input_box input {
+    width:80%;
+  }
+  .input_box textarea {
+    width:80%;
+    resize: none;
+    border-color: gainsboro;
+    overflow:scroll;
+    height: 300px
+  }
+
+  .right_content {
+    width:70%;
+    text-align: right;
+}

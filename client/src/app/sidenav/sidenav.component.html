@@ -1,0 +1,18 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <!-- <div>{{authService.currentUser}}</div> -->
+      <a mat-list-item routerLink="list">記事一覧</a>
+      <a  mat-list-item routerLink="register">記事作成</a>
+      <!-- <div *ngIf="authService.currentUser === null"><a mat-list-item routerLink="login">ログイン</a></div>
+      <div *ngIf="authService.currentUser !== null" ><a mat-list-item routerLink="logout">ログアウト</a></div> -->
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

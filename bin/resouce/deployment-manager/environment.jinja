@@ -1,0 +1,23 @@
+{% set PROJECT = env["project"] %}
+{% set DEPLOYMENT = env["deployment"] %}
+
+resources:
+  - name: {{ PROJECT }}-{{ DEPLOYMENT }}-media
+    type: storage.v1.bucket
+    properties:
+      defaultObjectAcl:
+        - entity: allUsers
+          role: READER
+      location: {{ properties["region"] }}
+      storageClass: REGIONAL
+      cors:
+        - maxAgeSeconds: 3600
+          method:
+            - GET
+            - POST
+            - DELETE
+            - PUT
+          origin: {{ properties["origin"] }}
+          responseHeader:
+            - Content-Type
+            - Authorization

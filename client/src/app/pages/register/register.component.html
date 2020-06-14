@@ -1,0 +1,18 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()"> 
+    <div class="input_box">
+        <p>タイトル</p>
+        <p><input type="text" name="title" formControlName="title"></p>
+    </div>
+    <div class="input_box">
+        <p>記事内容</p>
+        <p><textarea type="text" formControlName="content"></textarea></p>
+    </div>
+    <div class="input_box">
+        <p>アップロード画像</p>
+        <p><input type="file" accept="image/*" formControlName="image" (change)="onChangeInput($event)"></p>
+        <!-- <p><img [src]="fileUrl || ''"></p> -->
+    </div>
+    <div class="right_content">
+        <p><input type="submit" value="登録"></p>    
+    </div>
+</form>

@@ -1,0 +1,64 @@
+.full-height {
+    height: 100vh;
+}
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.position-ref {
+    position: relative;
+}
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+.content {
+    padding-left:100px;
+    padding-right:100px;
+    padding-top:70px;
+}
+.right_content {
+    text-align: right;
+}
+.left_content {
+    text-align: left;
+}
+.title {
+    font-size: 84px;
+}
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-transform: uppercase;                
+}
+.under_border
+{
+    border-bottom : 1px solid #dcdcdc;
+}
+.top_border
+{
+    border-top : 1px solid #dcdcdc;
+}
+.left_border
+{
+    border-left : 1px solid #dcdcdc;
+}
+.fullheight 
+{
+    height: 100%;
+}
+
+.mage{
+    height:60px;
+    width: 100px;
+}
+
+.border        
+{        
+    border : 0.8px solid #dcdcdc;        
+}
