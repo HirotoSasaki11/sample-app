@@ -32,8 +32,17 @@ export class EditComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onSubmit(): void {
+ 
+  onUpdate(): void {
+    const now = new Date();
+    this.article.title =this.form.controls['title'].value
+    this.article.content =this.form.controls['content'].value
+    this.article.uploadDate = now.toDateString()
 
+    this.service.update(this.article.id,this.article).then(
+      ()=>{
+          this.router.navigate(['list']);
+      })
   }
   delete():void {
     if(this.article.media &&this.article.media.id){

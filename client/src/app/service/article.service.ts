@@ -18,9 +18,9 @@ export class ArticleService {
     //this.db.collection('article').add(article)
     return this.db.collection('article').doc(article.id).set(article)
   }
-  put(id: string,article: Article){
-    //return this.db.collection('ariticle').doc(id).update(article)
-    return this.db.collection('ariticle').doc(id).set(article)
+  update(id: string,article: Article){
+    //return this.db.collection('article').doc(id).update(article)
+    return this.db.collection('article').doc(id).set(article)
   }
 
   delete(id: string){

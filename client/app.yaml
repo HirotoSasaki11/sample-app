@@ -1,15 +1,10 @@
-runtime: python27
+runtime: go111
 service: default
-api_version: 1
-threadsafe: true
 
 handlers:
-- url: /static
-  static_dir: dist
-
-- url: /assets
-  static_dir: dist/assets
-
-- url: /.*
-  static_files: dist/index.html
-  upload: dist/index.html
+  - url: /(.*\.(css|gif|png|jpg|ico|js|html))
+    static_files: dist/\1
+    upload: dist/(.*\.(css|gif|png|jpg|ico|js|html))
+  - url: /(.*)
+    static_files: dist/index.html
+    upload: dist/index.html
