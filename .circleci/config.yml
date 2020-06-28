@@ -17,15 +17,20 @@ jobs:
     steps:
       - checkout
       - run:
-          name: run unit test
+          name: run client build
           command: ./bin/client_build.sh --api_key ${_API_KEY} --auth_domain ${_AUTH_DOMAIN} --database_url ${_DATABASE_URL} --firebase_projcetid ${_FIREBASE_PROJECTID} --storage_bucket ${_STORAGE_BUCKET} --messaging_senderid ${_MESSAGGE_SEND_ID} --app_id ${_APP_ID} --measurement_id ${_MEASUREMENT_ID}
-  
+      - persist_to_workspace:
+          root: /home/circleci/projects/github.com/sample-app
+          paths: 
+            - client/dist
   deploy_app:
     docker:
       - image: google/cloud-sdk:latest
     working_directory: /go/src/go-sample-circleci
     steps: 
       - checkout 
+      - attach_workspace:
+          at: ./
       - run:
           name: activate service account
           command: |
@@ -38,8 +43,8 @@ workflows:
   version: 2
   test-and-deploy:
    jobs:
-    - client_test
     - client_build
+    - client_test
     - deploy_app:
         requires:
           - client_test
