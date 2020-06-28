@@ -1,5 +1,4 @@
 runtime: go111
-service: default
 
 handlers:
   - url: /(.*\.(css|gif|png|jpg|ico|js|html))

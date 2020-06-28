@@ -9,34 +9,42 @@ jobs:
       - run:
           name: run unit test
           command: ./bin/test_client.sh
+          
+  client_build:
+    docker:
+      - image: circleci/node:12.18-browsers
+    working_directory: /home/circleci/projects/github.com/sample-app
+    steps:
+      - checkout
+      - run:
+          name: run unit test
+          command: ./bin/client_build.sh --api_key ${_API_KEY} --auth_domain ${_AUTH_DOMAIN} --database_url ${_DATABASE_URL} --firebase_projcetid ${_FIREBASE_PROJECTID} --storage_bucket ${_STORAGE_BUCKET} --messaging_senderid ${_MESSAGGE_SEND_ID} --app_id ${_APP_ID} --measurement_id ${_MEASUREMENT_ID}
   
-  # deploy_app:
-  #   docker:
-  #     - image: google/cloud-sdk:latest
-  #   working_directory: /go/src/go-sample-circleci
-  #   steps: 
-  #     - checkout 
-  #     - run: apt-get update && apt-get install -y sudo
-  #     - run:
-  #        name: Permission denied回避
-  #        command: sudo chmod +x ./bin/deploy.sh
-  #     - run:
-  #         name: activate service account
-  #         command: |
-  #           echo ${GCP_KEY_FILE} > /key.json
-  #           gcloud auth activate-service-account --key-file /key.json
-  #     - run:
-  #         name: deploy to app engine
-  #         command: ./bin/deploy.sh ${PROJECT_ID}
+  deploy_app:
+    docker:
+      - image: google/cloud-sdk:latest
+    working_directory: /go/src/go-sample-circleci
+    steps: 
+      - checkout 
+      - run:
+          name: activate service account
+          command: |
+            echo ${GCP_KEY_FILE} > /key.json
+            gcloud auth activate-service-account --key-file /key.json
+      - run:
+          name: deploy to app engine
+          command: ./bin/deploy.sh --project ${PROJECT_ID}
 workflows:
   version: 2
   test-and-deploy:
    jobs:
     - client_test
-#         - deploy_app:
-#             requires:
-#               - test
-#             filters:
-#              branches:
-#                 only:
-#                   - master
+    - client_build
+    - deploy_app:
+        requires:
+          - client_test
+          - client_build
+        filters:
+          branches:
+            only:
+              - master
